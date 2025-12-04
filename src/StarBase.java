@@ -31,7 +31,7 @@ public class StarBase extends Star{
     }
     /**
      * Returns a printable version of all the base's stats
-     * @return printable verseion of base stats
+     * @return printable version of base stats
      */
     public String pullInfo(){
         return "ShipID:"+this.id+
