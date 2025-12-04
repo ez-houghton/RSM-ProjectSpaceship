@@ -3,8 +3,8 @@ import java.util.ArrayList;
 public class Fleet {
     String player;
     String id;
-    ArrayList<StarShip> ships = new ArrayList<StarShip>();
-    ArrayList<StarBase> bases = new ArrayList<StarBase>();
+    ArrayList<StarShip> ships = new ArrayList<>();
+    ArrayList<StarBase> bases = new ArrayList<>();
 
     /**
      * Constructor to be used when ships already added to arraylist.
@@ -43,7 +43,7 @@ public class Fleet {
 
     /**
      * Adds StarShip object to list of Fleet's ships. Sets starship's fleet to this fleet.
-     * @param obj
+     * @param obj ship to add to fleet
      */
     public void add(StarShip obj){
         obj.setFleet(this);
@@ -62,7 +62,7 @@ public class Fleet {
             if (x==2)System.out.println("--"+ship.id+" failed to move, on cooldown");
             else if (x==0) System.out.println("--"+ship.id+ " failed to move, already in sector or docked");
             else System.out.println("--"+ship.id+" moved to "+ sect);
-        };
+        }
         return 1;
     }
 

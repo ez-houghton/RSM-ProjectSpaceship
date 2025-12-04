@@ -3,7 +3,7 @@ import java.util.ArrayList;
 public class StarBase extends Star{
     private final double maxDefense=20;
     private final double maxHealth=500;
-    public ArrayList<StarShip> ships = new ArrayList<StarShip>();
+    public ArrayList<StarShip> ships = new ArrayList<>();
 
 
     /**

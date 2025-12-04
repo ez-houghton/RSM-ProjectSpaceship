@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 
-public class main {
-    public static void main(String args[]){
+public class Main {
+    public static void main(String[] args){
         // Player 1 Fleet. Fleet first construction
         Fleet p1fleet= new Fleet("1f","Player 1");
         StarBase p1b0= new StarBase("p1b0","Sector 1",p1fleet);
@@ -13,10 +13,10 @@ public class main {
 
         // Player 2 Fleet. Ship first Construction.
 
-        ArrayList<StarBase> p2bases = new ArrayList<StarBase>();
+        ArrayList<StarBase> p2bases = new ArrayList<>();
         StarBase p2b0= new StarBase("p2b0","Sector 2");
         p2bases.add(p2b0);
-        ArrayList<StarShip> p2ships = new ArrayList<StarShip>();
+        ArrayList<StarShip> p2ships = new ArrayList<>();
         StarShip p2s0= new StarShip("p2s0","Sector 2");
         StarShip p2s1= new StarShip("p2s1","Sector 2");
         StarShip p2s2= new StarShip("p2s2","Sector 2");
