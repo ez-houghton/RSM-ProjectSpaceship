@@ -49,11 +49,44 @@ public class StarBase extends Star{
      */
     public double getCurDef(){
         double dockDef=0;
-        for(StarShip ship : ships) dockDef+=ship.getCurDef();
+        for(StarShip ship : ships) {
+            if (ship.getCooldown()!=0)dockDef+=ship.getCurDef();
+        }
         return Math.floor(
                 this.maxDefense*(this.curHealth/this.maxHealth)
                 +(dockDef*(ships.size()/this.maxDefense))
         );
+    }
+    /**
+     * Reduces target's health. sets target to destroyed if health <=0.
+     * @param target StarShip object. the ship to be attacked
+     * @return integer code. <br>
+     * 2 if this object is on cooldown.<br>
+     * 1 if attack handles with no issues.<br>
+     * 0 if target not in same sector or part of same fleet.<br>
+     * -1 if this object destroyed
+     */
+    public int attack(StarShip target){
+        if(this.destroyed)return-1;
+        for(StarShip ship :ships){
+            ship.attack(target);
+        }
+        return 1;
+    }
+
+    /**
+     * Reduces target's health. sets target to destroyed and all ships docked to destroyed if starbase health reduces to 0 or below.
+     * @param target StarBase object. the base to be attacked
+     * @return integer code. <br>
+     * 1 if attack handles with no issues.<br>
+     * -1 if this object destroyed
+     */
+    public int attack(StarBase target){
+        if(this.destroyed)return-1;
+        for(StarShip ship :ships){
+            ship.attack(target);
+        }
+        return 1;
     }
 
     /**
@@ -63,6 +96,21 @@ public class StarBase extends Star{
      */
     public int add(StarShip ss){
         ships.add(ss);
+        return 1;
+    }
+
+    /**
+     * Moves base to specified sector,
+     * @param sect sector to be moved to
+     * @return Integer code <br>
+     * 1 if passed with no issues
+     * 0 if ship is already in this sector or cannot move because it is docked.
+     * -1 if this object destroyed
+     */
+    public int move(String sect){
+        if(this.destroyed)return-1;
+        if(sect.equals(this.sector))return 0;
+        this.sector=sect;
         return 1;
     }
 }

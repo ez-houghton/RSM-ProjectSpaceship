@@ -1,13 +1,14 @@
 
 
 public class StarShip extends Star{
-    private final double maxAttack=30;
-    private final double maxDefense=10;
-    private final double maxCrew=10;
-    private final double maxHealth=100;
+    private double maxAttack=30;
+    private double maxDefense=10;
+    private double maxCrew=10;
+    private double maxHealth=100;
     public StarBase starbase;
     private boolean docked=false;
     private int cooldown=0;
+    private boolean cloaked = false;
 
     /**
      * Constructor to be used when adding fleet on ship creation.
@@ -50,10 +51,22 @@ public class StarShip extends Star{
                 "\n--Cooldown:"+this.cooldown+
                 "\n--Starbase:"+(this.starbase==null?"none":this.starbase.id)+
                 "\n--Sector:"+this.sector+
-                "\n--Destroyed:"+this.destroyed
+                "\n--Destroyed:"+this.destroyed+
+                "\n--Cloaked:"+this.cloaked
                 ;
     }
 
+    /**
+     * Sets max defense to new value
+     * @param newDef
+     */
+    public void setMaxDef(int newDef){
+        this.maxDefense = newDef;
+    }
+    public int getCooldown(){
+        return this.cooldown;
+    }
+    public boolean isDocked(){return this.docked;}
     /**
      * Formula for current attack value
      * @return value of current attack.
@@ -110,6 +123,9 @@ public class StarShip extends Star{
         return 1;
     }
 
+    public void cloak(){this.cloaked=true;}
+    public void uncloak(){this.cloaked=false;}
+
 
     /**
      * Docks ship to specified StarBase object
@@ -151,7 +167,13 @@ public class StarShip extends Star{
 
 
     }
-
+    /**
+     * Sets max health to new value
+     * @param newHealth
+     */
+    public void setMaxHealth(int newHealth){
+        this.maxHealth = newHealth;
+    }
     /**
      * repairs ship's health and crew to full. updates cooldown depending on amount healed.<br>
      * 4 actions if health was below 25% <br>
@@ -188,6 +210,7 @@ public class StarShip extends Star{
      * Reduces target's health. sets target to destroyed if health <=0.
      * @param target StarShip object. the ship to be attacked
      * @return integer code. <br>
+     * 3 if target is cloaked. uncloaks target <br>
      * 2 if this object is on cooldown.<br>
      * 1 if attack handles with no issues.<br>
      * 0 if target not in same sector or part of same fleet.<br>
@@ -197,7 +220,10 @@ public class StarShip extends Star{
         if(this.destroyed)return-1;
         if(checkSkip())return 2;
         if(!this.sector.equals(target.sector) ||target.fleet==this.fleet)return 0;
-
+        if(target.cloaked){
+            target.uncloak();
+            return 3;
+        }
         double def= target.getCurDef();
         double atk = this.getCurAttack();
         double damage = getDamage(atk,def);

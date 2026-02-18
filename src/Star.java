@@ -13,4 +13,6 @@ abstract class Star {
      */
     public void setFleet(Fleet fleet){this.fleet=fleet;}
 
+
+
 }
